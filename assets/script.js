@@ -30,15 +30,18 @@ fetch(queryUrl)
 .then(function (data) {
     //console.log(queryUrl);
    // console.log(data);
-   // console.log(data.list[0]);
+   console.log(data.list[0]);
     console.log('temp: ' + data.list[0].main.temp);
     console.log('humidity: ' + data.list[0].main.humidity + '%');
     console.log('wind: ' + data.list[0].wind.speed);
 
-const todayContainer = $('#today');
+const todayOuterContainer = $('#today');
+const todayContainer = $('<div>').css('border', '5px');
 todayContainer.css({
-    'border' : '5px'
+    'padding': '5px',
+    'border': '1px solid black'
 })
+
 const todayHeader = $('<h2 class="today-header">').text('London');
 
 const tempValue = data.list[0].main.temp;
@@ -48,6 +51,7 @@ const todayTemp = $('<p class="today-temp">').text(`Temp: ${tempValue}`);
 const todayWind = $('<p class="today-wind">').text(`Wind: ${windValue} KPH`);
 const todayHumidity = $('<p class="today-humidity">').text(`Humidity: ${humidityValue}%`);
 
+todayOuterContainer.append(todayContainer);
 todayContainer.append(todayHeader, todayTemp, todayWind, todayHumidity);
 
 
