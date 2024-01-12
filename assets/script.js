@@ -28,10 +28,34 @@ fetch(queryUrl)
     return response.json();
 })
 .then(function (data) {
-    console.log(queryUrl);
+    //console.log(queryUrl);
    // console.log(data);
-    console.log(data.list[0]);
+   // console.log(data.list[0]);
     console.log('temp: ' + data.list[0].main.temp);
     console.log('humidity: ' + data.list[0].main.humidity + '%');
     console.log('wind: ' + data.list[0].wind.speed);
+
+const todayContainer = $('#today');
+todayContainer.css({
+    'border' : '5px'
 })
+const todayHeader = $('<h2 class="today-header">').text('London');
+
+const tempValue = data.list[0].main.temp;
+const windValue = data.list[0].wind.speed;
+const humidityValue = data.list[0].main.humidity;
+const todayTemp = $('<p class="today-temp">').text(`Temp: ${tempValue}`);
+const todayWind = $('<p class="today-wind">').text(`Wind: ${windValue} KPH`);
+const todayHumidity = $('<p class="today-humidity">').text(`Humidity: ${humidityValue}%`);
+
+todayContainer.append(todayHeader, todayTemp, todayWind, todayHumidity);
+
+
+
+// const forecast = ['', '', '', '', ''];
+// for (var i=0; i < forecast.length; i++) {
+//     const futureDay =  
+// };
+
+})
+
