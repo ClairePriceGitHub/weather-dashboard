@@ -1,16 +1,11 @@
 const apiKey = 'a26f42af7a79688b36f7437ceea8de52';
-const lat = 51.509865;
-const lon = -0.118092;
-const cityName = 'london';
-//const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-
+const cityName = 'London';
 const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`;
 
 
 
-
-$('.search-button').on('click', (event) => {
-    event.preventDefault();
+// Function to add button below search button
+function addButton(cityName) {
     const addButton = $('<button>');
     addButton.css({
         'width': '100%',
@@ -20,20 +15,31 @@ $('.search-button').on('click', (event) => {
         'border' : 'none',
         'margin-bottom' : '15px'
     });
-    const weatherSearch = $('.weather-search');
-    let input = weatherSearch.val();  
-    addButton.text(input);
+    addButton.text(cityName);
     $('.input-group-append').append(addButton);
+}
+
+// On click add button and reassign city name
+$('.search-button').on('click', (event, cityName) => {
+    event.preventDefault();
+    const weatherSearch = $('.weather-search');
+    if (weatherSearch.val()) {
+        cityName = weatherSearch.val(); 
+    } 
+    addButton(cityName);
 })
 
+
+
+// Fetch based on London as default
 fetch(queryUrl)
 .then(function (response) {
     return response.json();
 })
 .then(function (data) {
-    console.log(queryUrl);
-  console.log(data);
-   console.log(data.list[0]);
+  
+    console.log(data);
+    console.log(data.list[0]);
     console.log('temp: ' + data.list[0].main.temp);
     console.log('humidity: ' + data.list[0].main.humidity + '%');
     console.log('wind: ' + data.list[0].wind.speed);
@@ -45,7 +51,7 @@ todayContainer.css({
     'border': '1px solid black'
 })
 
-const todayHeader = $('<h2 class="today-header">').text('London');
+const todayHeader = $('<h2 class="today-header">').text(cityName);
 
 const tempValue = data.list[0].main.temp;
 const windValue = data.list[0].wind.speed;
@@ -59,10 +65,13 @@ todayContainer.append(todayHeader, todayTemp, todayWind, todayHumidity);
 
 
 
+
+
+})
+
+
+
 // const forecast = ['', '', '', '', ''];
 // for (var i=0; i < forecast.length; i++) {
 //     const futureDay =  
 // };
-
-})
-
