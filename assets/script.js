@@ -6,7 +6,7 @@ currentCity(currentCityName);
 
 
 
-// Add todays forecast structure and styling
+// Adds todays forecast structure and styling
 const todayOuterContainer = $('#today');
 const todayContainer = $('<div>').css('border', '5px');
 todayContainer.css({
@@ -24,8 +24,8 @@ todayContainer.append(todayHeader, todayTemp, todayWind, todayHumidity);
 
 
 
-// Function to add buttons below search button
-function addButton(cityNames) {
+// Function to add buttons below search button including styling
+function addButton(currentCityName) {
     const addButton = $('<button>');
     addButton.css({
         'width': '100%',
@@ -35,33 +35,33 @@ function addButton(cityNames) {
         'border' : 'none',
         'margin-bottom' : '15px'
     });
-    addButton.text(cityNames);
+    addButton.text(currentCityName);
     $('.input-group-append').append(addButton);
 }
 
 
-// Fetch based on London as default
+// Function to fetch using the current city
 function currentCity(currentCityName) {
-const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
-fetch(queryUrl)
-.then(function (response) {
-    return response.json();
-})
-.then(function (data) {
-    // console.log(data);
-    // console.log(data.list[0]);
-    // console.log('temp: ' + data.list[0].main.temp);
-    // console.log('humidity: ' + data.list[0].main.humidity + '%');
-    // console.log('wind: ' + data.list[0].wind.speed);
-    const headerValue = data.city.name;
-    const tempValue = data.list[0].main.temp;
-    const windValue = data.list[0].wind.speed;
-    const humidityValue = data.list[0].main.humidity;
-    todayHeader.text(headerValue);
-    todayTemp.text(`Temp: ${tempValue}`);
-    todayWind.text(`Wind: ${windValue} KPH`);
-    todayHumidity.text(`Humidity: ${humidityValue}%`);
-})
+    const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
+    fetch(queryUrl)
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        // console.log(data);
+        // console.log(data.list[0]);
+        // console.log('temp: ' + data.list[0].main.temp);
+        // console.log('humidity: ' + data.list[0].main.humidity + '%');
+        // console.log('wind: ' + data.list[0].wind.speed);
+        const headerValue = data.city.name;
+        const tempValue = data.list[0].main.temp;
+        const windValue = data.list[0].wind.speed;
+        const humidityValue = data.list[0].main.humidity;
+        todayHeader.text(headerValue);
+        todayTemp.text(`Temp: ${tempValue}`);
+        todayWind.text(`Wind: ${windValue} KPH`);
+        todayHumidity.text(`Humidity: ${humidityValue}%`);
+    })
 }
 
 
@@ -75,12 +75,9 @@ fetch(queryUrl)
 $('.search-button').on('click', (event) => {
     event.preventDefault();
     const weatherSearch = $('.weather-search');
-    const newCityName = weatherSearch.val(); 
-    cityNames.push(newCityName);
-  
-    addButton(newCityName);
-   // console.log(cityNames);
-    currentCityName = newCityName;
+    currentCityName = weatherSearch.val(); 
+    cityNames.push(currentCityName);
+    addButton(currentCityName);
     currentCity(currentCityName);
 })
 
