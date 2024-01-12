@@ -1,6 +1,10 @@
-const queryApi = 'a26f42af7a79688b36f7437ceea8de52';
+const apiKey = 'a26f42af7a79688b36f7437ceea8de52';
+const lat = 51.509865;
+const lon = -0.118092;
+const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-let cities = ['Berlin', 'Paris', 'Edinburgh', 'Madrid', 'Birmingham', 'London'];
+
+
 
 $('.search-button').on('click', (event) => {
     event.preventDefault();
@@ -19,9 +23,11 @@ $('.search-button').on('click', (event) => {
     $('.input-group-append').append(addButton);
 })
 
-// for (var i=0; i < cities.length; i++) {
-//     const addButton = $('<button>');
-//     addButton.text(cities[i]);
-//    // addButton.attr('cityname', cities[i])
-//     $('.input-group-append').append(addButton);
-// }
+fetch(queryUrl)
+.then(function (response) {
+    return response.json();
+})
+.then(function (data) {
+    console.log(queryUrl);
+    console.log(data);
+})
