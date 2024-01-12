@@ -29,5 +29,9 @@ fetch(queryUrl)
 })
 .then(function (data) {
     console.log(queryUrl);
-    console.log(data);
+   // console.log(data);
+    console.log(data.list[0]);
+    console.log('temp: ' + data.list[0].main.temp);
+    console.log('humidity: ' + data.list[0].main.humidity + '%');
+    console.log('wind: ' + data.list[0].wind.speed);
 })
