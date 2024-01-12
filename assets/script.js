@@ -1,0 +1,1 @@
+const queryApi = 'a26f42af7a79688b36f7437ceea8de52';
