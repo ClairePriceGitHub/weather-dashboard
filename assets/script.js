@@ -1,7 +1,10 @@
 const apiKey = 'a26f42af7a79688b36f7437ceea8de52';
 const lat = 51.509865;
 const lon = -0.118092;
-const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+const cityName = 'london';
+//const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`;
 
 
 
@@ -28,8 +31,8 @@ fetch(queryUrl)
     return response.json();
 })
 .then(function (data) {
-    //console.log(queryUrl);
-   // console.log(data);
+    console.log(queryUrl);
+  console.log(data);
    console.log(data.list[0]);
     console.log('temp: ' + data.list[0].main.temp);
     console.log('humidity: ' + data.list[0].main.humidity + '%');
