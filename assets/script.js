@@ -1,7 +1,10 @@
 const apiKey = 'a26f42af7a79688b36f7437ceea8de52';
-const cityNames = [];
+let cityNames = [];
 let currentCityName = 'London';
 const today = dayjs().format('DD/MM/YYYY');
+
+// Local storage city buttons styling
+
 
 
 
@@ -14,25 +17,10 @@ function setLocalStorage() {
     localStorage.setItem('city names', JSON.stringify(cityNames));
 };
 
-
-
-
-// // Function to check if there is local storage saved data 
-// function updateDisplay() {
-//     var $getTimeSlots = JSON.parse(localStorage.getItem('city names'));
-//     if ($getTimeSlots) {
-//         $('.row #input').each(function(index) {
-//             $(this).text($getTimeSlots[index].input);
-//         });  
-//     }
-// };
-// updateDisplay();
-
-
 // Function to add buttons below search button 
 function addButton(currentCityName) {
-    const addButton = $('<button class="searched-city">');
-    addButton.css({
+    const cityButton = $('<button class="searched-city">');
+    cityButton.css({
         'width': '100%',
         'height': '5vh',
         'backgroundColor': 'lightGrey',
@@ -40,9 +28,12 @@ function addButton(currentCityName) {
         'border' : 'none',
         'margin-bottom' : '15px'
     });
-    addButton.text(currentCityName);
-    $('.input-group-append').append(addButton);
+    cityButton.text(currentCityName);
+    $('.input-group-append').append(cityButton);
 };
+
+
+
 
 
 // Function to fetch using the current city
@@ -80,6 +71,10 @@ function currentDay(currentCityName) {
 };
 
 
+
+
+
+
 function fiveDay(currentCityName) {
     // Adds 5-Day forecast structure and styling
     $('#forecast').empty();
@@ -97,7 +92,7 @@ function fiveDay(currentCityName) {
         return response.json();
     })
     .then(function (data) {
-        for (var i=1; i < 6; i++) {
+        for (let i=1; i < 6; i++) {
             const fiveContainer = $('<div>');
             fiveContainer.css({
                 'backgroundColor' : '#333366',
@@ -126,12 +121,28 @@ function fiveDay(currentCityName) {
 };
 
 
+// Function to check if there is local storage saved data 
+function updateDisplay(addButton) {
+    var $getTimeSlots = JSON.parse(localStorage.getItem('city names'));
+    if ($getTimeSlots) {
+        cityNames = $getTimeSlots;
+        for (let i=0; i < cityNames.length; i++) {
+            //$('.input-group-append').append($('<button class="searched-city">'));
+            
+            addButton(cityNames[i]);
+        }
+        console.log(cityNames);
+    };
+};
+updateDisplay(addButton);
+
+
 // On click add button and reassign city name
 $('.search-button').on('click', (event) => {
     event.preventDefault();
     const weatherSearch = $('.weather-search');
     currentCityName = weatherSearch.val(); 
-    cityNames.push(currentCityName);
+    cityNames.unshift(currentCityName);
     addButton(currentCityName);
     currentDay(currentCityName);
     fiveDay(currentCityName);
