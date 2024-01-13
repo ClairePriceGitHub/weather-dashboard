@@ -4,6 +4,21 @@ let currentCityName = 'London';
 currentCity(currentCityName);
 
 
+// Function to save to local storage
+function setLocalStorage() {
+    localStorage.setItem('city names', JSON.stringify(cityNames));
+};
+
+// Function to check if there is local storage saved data 
+function updateDisplay() {
+    var $getTimeSlots = JSON.parse(localStorage.getItem('city names'));
+    if ($getTimeSlots) {
+        $('.row #input').each(function(index) {
+            $(this).text($getTimeSlots[index].input);
+        });  
+    }
+};
+updateDisplay();
 
 
 // Adds todays forecast structure and styling
@@ -12,7 +27,7 @@ const todayContainer = $('<div>').css('border', '5px');
 todayContainer.css({
     'padding': '5px',
     'border': '1px solid black'
-})
+});
 const todayHeader = $('<h2 class="today-header">');
 const todayTemp = $('<p class="today-temp">');
 const todayWind = $('<p class="today-wind">');
@@ -37,7 +52,7 @@ function addButton(currentCityName) {
     });
     addButton.text(currentCityName);
     $('.input-group-append').append(addButton);
-}
+};
 
 
 // Function to fetch using the current city
@@ -62,7 +77,7 @@ function currentCity(currentCityName) {
         todayWind.text(`Wind: ${windValue} KPH`);
         todayHumidity.text(`Humidity: ${humidityValue}%`);
     })
-}
+};
 
 
 // const forecast = ['', '', '', '', ''];
@@ -79,8 +94,9 @@ $('.search-button').on('click', (event) => {
     cityNames.push(currentCityName);
     addButton(currentCityName);
     currentCity(currentCityName);
+    setLocalStorage();
 })
 
-//console.log(cityName);
+
 
 
