@@ -19,7 +19,7 @@ function setLocalStorage() {
 
 // Function to add buttons below search button 
 function addButton(currentCityName) {
-    const cityButton = $('<button class="searched-city">');
+    const cityButton = $('<button class="searched-city">').text(currentCityName);
     cityButton.css({
         'width': '100%',
         'height': '5vh',
@@ -28,8 +28,7 @@ function addButton(currentCityName) {
         'border' : 'none',
         'margin-bottom' : '15px'
     });
-    cityButton.text(currentCityName);
-    $('.input-group-append').append(cityButton);
+    cityButton.insertAfter($('.hr'));
 };
 
 
@@ -127,11 +126,8 @@ function updateDisplay(addButton) {
     if ($getTimeSlots) {
         cityNames = $getTimeSlots;
         for (let i=0; i < cityNames.length; i++) {
-            //$('.input-group-append').append($('<button class="searched-city">'));
-            
             addButton(cityNames[i]);
         }
-        console.log(cityNames);
     };
 };
 updateDisplay(addButton);
