@@ -3,11 +3,6 @@ let cityNames = [];
 let currentCityName = 'London';
 const today = dayjs().format('DD/MM/YYYY');
 
-// Local storage city buttons styling
-
-
-
-
 // Initialise default city forecast
 currentDay(currentCityName);
 fiveDay(currentCityName);
@@ -35,7 +30,7 @@ function addButton(currentCityName) {
 
 
 
-// Function to fetch using the current city
+// Function to fetch current day forecast using the current city
 function currentDay(currentCityName) {
     // Add todays forecast structure and styling
     $('#today').empty();
@@ -59,7 +54,7 @@ function currentDay(currentCityName) {
     })
     .then(function (data) {
         const headerValue = data.city.name;
-        const tempValue = data.list[0].main.temp;
+        const tempValue = (data.list[0].main.temp - 273.15).toFixed(2);
         const windValue = data.list[0].wind.speed;
         const humidityValue = data.list[0].main.humidity;
         todayHeader.text(`${headerValue} ${today}`);
@@ -69,11 +64,7 @@ function currentDay(currentCityName) {
     })
 };
 
-
-
-
-
-
+// Function to fetch 5-Day forecast using the current city
 function fiveDay(currentCityName) {
     // Adds 5-Day forecast structure and styling
     $('#forecast').empty();
@@ -101,16 +92,15 @@ function fiveDay(currentCityName) {
             })
             const fiveSubHeader = $('<h5 class="five-header">');
             const weatherImg = $('<img src="images/1530370_weather_clouds_hail_hailstone_snow_icon.png" height="60px">');
-            
             const fiveTemp = $('<p class="five-temp">');
             const fiveWind = $('<p class="five-wind">');
             const fiveHumidity = $('<p class="five-humidity">');
+            const fiveTempVal = (data.list[i].main.temp - 273.15).toFixed(2);
+            const fiveWindVal = data.list[i].wind.speed;
+            const fiveHumidityVal = data.list[i].main.humidity;
+            const nextDay = dayjs().add([i], 'd').format('DD/MM/YYYY');
             fiveOuterContainer.append(fiveContainer);
             fiveContainer.append(fiveSubHeader, weatherImg, fiveTemp, fiveWind, fiveHumidity);
-            let fiveTempVal = data.list[i].main.temp;
-            let fiveWindVal = data.list[i].wind.speed;
-            let fiveHumidityVal = data.list[i].main.humidity;
-            let nextDay = new dayjs().add([i], 'd').format('DD/MM/YYYY');
             fiveSubHeader.text(nextDay);
             fiveTemp.text(`Temp: ${fiveTempVal} C`);
             fiveWind.text(`Wind: ${fiveWindVal} KPH`);
@@ -145,6 +135,11 @@ $('.search-button').on('click', (event) => {
     setLocalStorage();
 })
 
-
+$('.searched-city').on('click', (event) => {
+    event.preventDefault();
+    currentCityName = $(event.currentTarget).text();
+    currentDay(currentCityName);
+    fiveDay(currentCityName);
+})
 
 
