@@ -82,17 +82,25 @@ function currentDay(currentCityName) {
 
 
         // Adds 5-Day forecast structure and styling
-const fiveOuterContainer = $('#forecast');
+  
+const fiveOuterContainer = $('<div>');
+fiveOuterContainer.css({
+    'display' : 'flex',
+    'justifyContent' : 'space-between'
+})
+$('#forecast').append(fiveOuterContainer);
 for (var i=1; i < 6; i++) {
 const fiveContainer = $('<div>');
 fiveContainer.css({
     'backgroundColor' : 'midnightblue',
-    'color' : 'white'
+    'color' : 'white',
+  //  'display' : 'flex'
 })
 let fiveHeader = $('<h2 class="five-header">');
 let fiveTemp = $('<p class="five-temp">');
 let fiveWind = $('<p class="five-wind">');
 let fiveHumidity = $('<p class="five-humidity">');
+
 fiveOuterContainer.append(fiveContainer);
 fiveContainer.append(fiveHeader, fiveTemp, fiveWind, fiveHumidity);
 
