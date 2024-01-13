@@ -3,6 +3,8 @@ const cityNames = [];
 let currentCityName = 'London';
 const today = dayjs().format('DD/MM/YYYY');
 
+
+
 // Initialise default city forecast
 currentDay(currentCityName);
 fiveDay(currentCityName);
@@ -114,7 +116,8 @@ function fiveDay(currentCityName) {
             let fiveTempVal = data.list[i].main.temp;
             let fiveWindVal = data.list[i].wind.speed;
             let fiveHumidityVal = data.list[i].main.humidity;
-            fiveSubHeader.text(today);
+            let nextDay = new dayjs().add([i], 'd').format('DD/MM/YYYY');
+            fiveSubHeader.text(nextDay);
             fiveTemp.text(`Temp: ${fiveTempVal} C`);
             fiveWind.text(`Wind: ${fiveWindVal} KPH`);
             fiveHumidity.text(`Humidity: ${fiveHumidityVal} %`);
