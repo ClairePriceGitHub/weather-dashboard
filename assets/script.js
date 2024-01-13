@@ -1,29 +1,11 @@
 const apiKey = 'a26f42af7a79688b36f7437ceea8de52';
 const cityNames = [];
 let currentCityName = 'London';
-currentCity(currentCityName);
-
-
-// Function to save to local storage
-function setLocalStorage() {
-    localStorage.setItem('city names', JSON.stringify(cityNames));
-};
-
-// Function to check if there is local storage saved data 
-function updateDisplay() {
-    var $getTimeSlots = JSON.parse(localStorage.getItem('city names'));
-    if ($getTimeSlots) {
-        $('.row #input').each(function(index) {
-            $(this).text($getTimeSlots[index].input);
-        });  
-    }
-};
-updateDisplay();
-
+currentDay(currentCityName);
 
 // Adds todays forecast structure and styling
 const todayOuterContainer = $('#today');
-const todayContainer = $('<div>').css('border', '5px');
+const todayContainer = $('<div>');
 todayContainer.css({
     'padding': '5px',
     'border': '1px solid black'
@@ -35,6 +17,26 @@ const todayHumidity = $('<p class="today-humidity">');
 todayOuterContainer.append(todayContainer);
 todayContainer.append(todayHeader, todayTemp, todayWind, todayHumidity);
 
+
+
+
+
+
+// Function to save to local storage
+function setLocalStorage() {
+    localStorage.setItem('city names', JSON.stringify(cityNames));
+};
+
+// // Function to check if there is local storage saved data 
+// function updateDisplay() {
+//     var $getTimeSlots = JSON.parse(localStorage.getItem('city names'));
+//     if ($getTimeSlots) {
+//         $('.row #input').each(function(index) {
+//             $(this).text($getTimeSlots[index].input);
+//         });  
+//     }
+// };
+// updateDisplay();
 
 
 
@@ -56,7 +58,7 @@ function addButton(currentCityName) {
 
 
 // Function to fetch using the current city
-function currentCity(currentCityName) {
+function currentDay(currentCityName) {
     const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
     fetch(queryUrl)
     .then(function (response) {
@@ -76,6 +78,29 @@ function currentCity(currentCityName) {
         todayTemp.text(`Temp: ${tempValue}`);
         todayWind.text(`Wind: ${windValue} KPH`);
         todayHumidity.text(`Humidity: ${humidityValue}%`);
+
+
+
+        // Adds 5-Day forecast structure and styling
+const fiveOuterContainer = $('#forecast');
+for (var i=1; i < 6; i++) {
+const fiveContainer = $('<div>');
+fiveContainer.css({
+    'backgroundColor' : 'midnightblue',
+    'color' : 'white'
+})
+let fiveHeader = $('<h2 class="five-header">');
+let fiveTemp = $('<p class="five-temp">');
+let fiveWind = $('<p class="five-wind">');
+let fiveHumidity = $('<p class="five-humidity">');
+fiveOuterContainer.append(fiveContainer);
+fiveContainer.append(fiveHeader, fiveTemp, fiveWind, fiveHumidity);
+
+        
+            fiveTemp.text(data.list[i].main.temp);
+            fiveWind.text(data.list[i].wind.speed);
+            fiveHumidity.text(data.list[i].main.humidity);
+        };
     })
 };
 
@@ -86,6 +111,8 @@ function currentCity(currentCityName) {
 // };
 
 
+
+
 // On click add button and reassign city name
 $('.search-button').on('click', (event) => {
     event.preventDefault();
@@ -93,7 +120,7 @@ $('.search-button').on('click', (event) => {
     currentCityName = weatherSearch.val(); 
     cityNames.push(currentCityName);
     addButton(currentCityName);
-    currentCity(currentCityName);
+    currentDay(currentCityName);
     setLocalStorage();
 })
 
