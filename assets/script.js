@@ -1,3 +1,28 @@
+
+
+// General styling
+$('.weather-header').css({
+    'backgroundImage': 'linear-gradient(to right, cornflowerblue, #333366)'
+})
+$('.input-group').css('display', 'block');
+$('.weather-search').css({
+    'display': 'block',
+    'width': '100%',
+    'height': '6vh',
+    'borderRadius': '5px',
+    'paddingLeft': '5px'
+});
+$('.search-button').css({
+    'backgroundColor': 'cornflowerblue',
+    'width': '100%',
+    'marginTop': '15px'
+})
+$('.form').css({
+    'borderBottom': '1px'
+})
+$('<h2>').css('margin', '0px')
+
+// Settings
 const apiKey = 'a26f42af7a79688b36f7437ceea8de52';
 let cityNames = [];
 let currentCityName = 'London';
