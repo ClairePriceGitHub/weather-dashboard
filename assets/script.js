@@ -145,21 +145,13 @@ function updateDisplay(addButton) {
 updateDisplay(addButton);
 
 // Removes last child if local store buttons greater than 6
-// function sixButtonsMax() {
-//     const numButtons = $('.searched-city').length;
-//     if (numButtons > 6) {
-//         $('.input-group-append > :last-child').remove();
-//     };
-// };
-
-$('<button>').on('click', (event) => {
+function sixButtonsMax(cityNames) {
     const numButtons = $('.searched-city').length;
     if (numButtons > 6) {
         $('.input-group-append > :last-child').remove();
+        cityNames.pop();
     };
-});
-
-
+};
 
 // On click of Search button add local storage button and show forecast for corresponding city
 $('.search-button').on('click', (event) => {
@@ -167,25 +159,16 @@ $('.search-button').on('click', (event) => {
     const city = $('.weather-search').val(); 
     const cityFormat = city.charAt(0).toUpperCase() + city.slice(1);
     currentCityName = cityFormat;
-
     if (city) {
         addButton(currentCityName);
         cityNames.unshift(currentCityName);
-        //cityNames.push(currentCityName);
         currentDay(currentCityName);
         fiveDay(currentCityName);
         iconArr.splice(0, iconArr.length);
-        const numButtons = $('.searched-city').length;
-        if (numButtons > 6) {
-            $('.input-group-append > :last-child').remove();
-            cityNames.pop();
-        };
-        
+        sixButtonsMax(cityNames);
     };
-
+    $('.weather-search').val('');
     setLocalStorage();
-    //console.log(cityNames);
-    
 });
 
 // On click of any local storage button show forecast for corresponding city
@@ -195,8 +178,6 @@ $('.searched-city').on('click', (event) => {
     currentDay(currentCityName);
     fiveDay(currentCityName);
     iconArr.splice(0, iconArr.length);
-    //setLocalStorage();
-    console.log(cityNames);
 });
 
 
