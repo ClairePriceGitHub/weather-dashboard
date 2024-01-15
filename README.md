@@ -18,6 +18,7 @@ Open in the browser, either enter a city name in the search field and click ‘S
 
 https://clairepricegithub.github.io/weather-dashboard/
 
+
 ![screenshot](images/02_screenshot.png)
 
 ## Credits
