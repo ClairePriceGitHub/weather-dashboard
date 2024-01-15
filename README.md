@@ -32,7 +32,6 @@ rifton007. (2021, February 22). *add or subtract by 'date' is not working*. Gith
 
 Techie Delight. (2021). *Loop through an array backward in JavaScript*. https://www.techiedelight.com/loop-through-array-backwards-javascript/
 
-
 ## License
 
 Please refer to the LICENSE in the repo
