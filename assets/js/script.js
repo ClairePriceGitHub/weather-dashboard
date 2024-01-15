@@ -109,7 +109,7 @@ $( document ).ready(function() {
 
     // Function to fetch forecast using the current city
     function fetchForecast(currentCityName) {
-        const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
+        const queryUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
         fetch(queryUrl)
         .then(function (response) {
             return response.json();
