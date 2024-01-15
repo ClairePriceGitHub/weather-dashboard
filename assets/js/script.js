@@ -89,9 +89,7 @@ function fiveDayStructure(data) {
             'color' : 'white',
             'padding' : '5px',
             'width' : '18%'
-        })
-        console.log(data.list[i]);
-        console.log(data.city.name);
+        });
         const fiveTempVal = (data.list[i].main.temp - 273.15).toFixed(2);
         const fiveWindVal = (data.list[i].wind.speed * 3.6).toFixed(2);
         const fiveHumidityVal = data.list[i].main.humidity;
