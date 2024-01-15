@@ -5,7 +5,7 @@ let cityNames = [];
 let currentCityName = 'London';
 let iconArr = [];
 
-// General styling
+// Existing HTML styling
 $('.weather-header').css({
     'backgroundImage': 'linear-gradient(to right, cornflowerblue, #333366)'
 })
@@ -28,8 +28,7 @@ $('.form').css({
 $('<h2>').css('margin', '0px')
 
 // Initialise default city forecast
-currentDay(currentCityName);
-fiveDay(currentCityName);
+fetchForecast(currentCityName);
 
 // Function to add buttons below search button 
 function addButton(currentCityName) {
@@ -43,87 +42,82 @@ function addButton(currentCityName) {
         'margin-bottom' : '15px'
     });
     cityButton.insertAfter($('.hr'));
-    //$('.input-group-append').append(cityButton);
 };
 
-// Function to fetch current day forecast using the current city
-function currentDay(currentCityName) {
-    const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
-    fetch(queryUrl)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-       //console.log(data.list);
-       //console.log(data.list[0].weather[0].icon);
-        // Add todays forecast structure and styling
-        $('#today').empty();
-        const icon = data.list[0].weather[0].icon;
-        const todayOuterContainer = $('#today');
-        const todayContainer = $('<div>').css({
-            'padding': '5px',
-            'border': '1px solid black'
-        });
-        const headerContainer = $('<div>').css({
-            'display': 'flex',
-            'alignItems': 'end',
-            'marginBottom': '8px'
-        });
-        const headerValue = data.city.name;
-        const tempValue = (data.list[0].main.temp - 273.15).toFixed(2);
-        const windValue = (data.list[0].wind.speed * 3.6).toFixed(2);
-        const humidityValue = data.list[0].main.humidity;
-        const todayHeader = $('<h2 class="today-header">').text(`${headerValue} ${today}`);
-        const todayImg = $('<img class="fiveIcon" src="" height="60px">');
-        const todayTemp = $('<p class="today-temp">').text(`Temp: ${tempValue} °C`);
-        const todayWind = $('<p class="today-wind">').text(`Wind: ${windValue} KPH`);
-        const todayHumidity = $('<p class="today-humidity">').text(`Humidity: ${humidityValue}%`);
-        todayOuterContainer.append(todayContainer);
-        todayContainer.append(headerContainer, todayTemp, todayWind, todayHumidity);
-        headerContainer.append(todayHeader, todayImg);
+// Function to add structure, styling and content to current day forecast
+function currentDayStructure(data) {
+    const icon = data.list[0].weather[0].icon;
+    const todayOuterContainer = $('#today');
+    const todayContainer = $('<div>').css({
+        'padding': '5px',
+        'border': '1px solid black'
+    });
+    const headerContainer = $('<div>').css({
+        'display': 'flex',
+        'alignItems': 'end',
+        'marginBottom': '8px'
+    });
+    const headerValue = data.city.name;
+    const tempValue = (data.list[0].main.temp - 273.15).toFixed(2);
+    const windValue = (data.list[0].wind.speed * 3.6).toFixed(2);
+    const humidityValue = data.list[0].main.humidity;
+    const todayHeader = $('<h2 class="today-header">').text(`${headerValue} ${today}`);
+    const todayImg = $('<img class="fiveIcon" src="" height="60px">');
+    const todayTemp = $('<p class="today-temp">').text(`Temp: ${tempValue} °C`);
+    const todayWind = $('<p class="today-wind">').text(`Wind: ${windValue} KPH`);
+    const todayHumidity = $('<p class="today-humidity">').text(`Humidity: ${humidityValue}%`);
+    todayOuterContainer.append(todayContainer);
+    todayContainer.append(headerContainer, todayTemp, todayWind, todayHumidity);
+    headerContainer.append(todayHeader, todayImg);
+    iconArr.push(icon);
+};
+
+// Function to add structure, styling and content to 5-day forecast
+function fiveDayStructure(data) {
+    const fiveHeader = $('<h4>').text('5-Day Forecast:');
+    const fiveOuterContainer = $('<div>');
+    fiveOuterContainer.css({
+        'display' : 'flex',
+        'justifyContent' : 'space-between'
+    });
+    $('#forecast').append(fiveHeader, fiveOuterContainer);
+    for (let i=1; i < 6; i++) {
+        const nextDay = dayjs().add([i], 'd').format('DD/MM/YYYY');
+        const fiveContainer = $('<div>');
+        fiveContainer.css({
+            'backgroundColor' : '#333366',
+            'color' : 'white',
+            'padding' : '5px',
+            'width' : '18%'
+        })
+        const fiveTempVal = (data.list[i].main.temp - 273.15).toFixed(2);
+        const fiveWindVal = (data.list[i].wind.speed * 3.6).toFixed(2);
+        const fiveHumidityVal = data.list[i].main.humidity;
+        const fiveSubHeader = $('<h5 class="five-header">').css('padding-bottom', '5px').text(nextDay);
+        const fiveIcon = $('<img class="fiveIcon" src="" height="50px">').css('padding-bottom', '10px');
+        const fiveTemp = $('<p class="five-temp">').text(`Temp: ${fiveTempVal} °C`);
+        const fiveWind = $('<p class="five-wind">').text(`Wind: ${fiveWindVal} KPH`);
+        const fiveHumidity = $('<p class="five-humidity">').text(`Humidity: ${fiveHumidityVal} %`);
+        fiveOuterContainer.append(fiveContainer);
+        fiveContainer.append(fiveSubHeader, fiveIcon, fiveTemp, fiveWind, fiveHumidity);
+        icon = data.list[i].weather[0].icon;
         iconArr.push(icon);
-    })
-};
+        forecastIcon(iconArr);
+    };
+}
 
-// Function to fetch 5-Day forecast using the current city
-function fiveDay(currentCityName) {
+// Function to fetch forecast using the current city
+function fetchForecast(currentCityName) {
     const queryUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${currentCityName}&appid=${apiKey}`;
     fetch(queryUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
+        $('#today').empty();
         $('#forecast').empty();
-        const fiveHeader = $('<h4>').text('5-Day Forecast:');
-        const fiveOuterContainer = $('<div>');
-        fiveOuterContainer.css({
-            'display' : 'flex',
-            'justifyContent' : 'space-between'
-        });
-        $('#forecast').append(fiveHeader, fiveOuterContainer);
-        for (let i=1; i < 6; i++) {
-            const nextDay = dayjs().add([i], 'd').format('DD/MM/YYYY');
-            const fiveContainer = $('<div>');
-            fiveContainer.css({
-                'backgroundColor' : '#333366',
-                'color' : 'white',
-                'padding' : '5px',
-                'width' : '18%'
-            })
-            const fiveTempVal = (data.list[i].main.temp - 273.15).toFixed(2);
-            const fiveWindVal = (data.list[i].wind.speed * 3.6).toFixed(2);
-            const fiveHumidityVal = data.list[i].main.humidity;
-            const fiveSubHeader = $('<h5 class="five-header">').css('padding-bottom', '5px').text(nextDay);
-            const fiveIcon = $('<img class="fiveIcon" src="" height="50px">').css('padding-bottom', '10px');
-            const fiveTemp = $('<p class="five-temp">').text(`Temp: ${fiveTempVal} °C`);
-            const fiveWind = $('<p class="five-wind">').text(`Wind: ${fiveWindVal} KPH`);
-            const fiveHumidity = $('<p class="five-humidity">').text(`Humidity: ${fiveHumidityVal} %`);
-            fiveOuterContainer.append(fiveContainer);
-            fiveContainer.append(fiveSubHeader, fiveIcon, fiveTemp, fiveWind, fiveHumidity);
-            icon = data.list[i].weather[0].icon;
-            iconArr.push(icon);
-            forecastIcon(iconArr);
-        };
+        currentDayStructure(data);
+        fiveDayStructure(data);
     })
 };
 
@@ -144,7 +138,7 @@ function updateDisplay(addButton) {
 };
 updateDisplay(addButton);
 
-// Removes last child if local store buttons greater than 6
+// Function to remove last child if number of city store buttons are greater than 6
 function sixButtonsMax(cityNames) {
     const numButtons = $('.searched-city').length;
     if (numButtons > 6) {
@@ -162,8 +156,7 @@ $('.search-button').on('click', (event) => {
     if (city) {
         addButton(currentCityName);
         cityNames.unshift(currentCityName);
-        currentDay(currentCityName);
-        fiveDay(currentCityName);
+        fetchForecast(currentCityName);
         iconArr.splice(0, iconArr.length);
         sixButtonsMax(cityNames);
     };
@@ -175,8 +168,7 @@ $('.search-button').on('click', (event) => {
 $('.searched-city').on('click', (event) => {
     event.preventDefault();
     currentCityName = $(event.currentTarget).text();
-    currentDay(currentCityName);
-    fiveDay(currentCityName);
+    fetchForecast(currentCityName);
     iconArr.splice(0, iconArr.length);
 });
 
