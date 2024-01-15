@@ -24,12 +24,13 @@ https://clairepricegithub.github.io/weather-dashboard/
 
 Flexiple. (n.d.). *JavaScript: Capitalize the first letter*. https://flexiple.com/javascript/javascript-capitalize-first-letter
 
-Matthew C. (n.d.). *How do I Empty an Array in JavaScript?*. Sentry. https://sentry.io/answers/how-do-i-empty-an-array-in-javascript/#:~:text=Using%20the%20splice()%20Method&text=splice(0%2C%20arr.,from%20the%20start%20index%20position.
+Matthew C. (n.d.). *How do I Empty an Array in JavaScript?*. Sentry. https://sentry.io/answers/how-do-i-empty-an-array-in-javascript/#:~:text=Using%20the%20splice()%20Method&text=splice(0%2C%20arr.,from%20the%20start%20index%20position
 
-rifton007. (2021, February 22). *add or subtract by 'date' is not working*. Github. https://github.com/iamkun/dayjs/issues/681 
+necolas. (n.d.). *normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css* Github Normalize.css. https://necolas.github.io/normalize.css/8.0.1/normalize.css
+
+rifton007. (2021, February 22). *add or subtract by 'date' is not working*. Github iamkun dayjs. https://github.com/iamkun/dayjs/issues/681 
 
 Techie Delight. (2021). *Loop through an array backward in JavaScript*. https://www.techiedelight.com/loop-through-array-backwards-javascript/
-
 
 ## License
 
