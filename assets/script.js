@@ -8,7 +8,7 @@ let iconArr = [];
 // Existing HTML styling
 $('.weather-header').css({
     'backgroundImage': 'linear-gradient(to right, cornflowerblue, #333366)'
-})
+});
 $('.input-group').css('display', 'block');
 $('.weather-search').css({
     'display': 'block',
@@ -21,11 +21,11 @@ $('.search-button').css({
     'backgroundColor': 'cornflowerblue',
     'width': '100%',
     'marginTop': '15px'
-})
+});
 $('.form').css({
     'borderBottom': '1px'
-})
-$('<h2>').css('margin', '0px')
+});
+$('<h2>').css('margin', '0px');
 
 // Initialise default city forecast
 fetchForecast(currentCityName);
@@ -90,6 +90,8 @@ function fiveDayStructure(data) {
             'padding' : '5px',
             'width' : '18%'
         })
+        console.log(data.list[i]);
+        console.log(data.city.name);
         const fiveTempVal = (data.list[i].main.temp - 273.15).toFixed(2);
         const fiveWindVal = (data.list[i].wind.speed * 3.6).toFixed(2);
         const fiveHumidityVal = data.list[i].main.humidity;
@@ -104,7 +106,7 @@ function fiveDayStructure(data) {
         iconArr.push(icon);
         forecastIcon(iconArr);
     };
-}
+};
 
 // Function to fetch forecast using the current city
 function fetchForecast(currentCityName) {
