@@ -138,7 +138,7 @@ function updateDisplay(addButton) {
 };
 updateDisplay(addButton);
 
-// Function to remove last child if number of city store buttons are greater than 6
+// Function to remove last child button if number of city store buttons are greater than 6
 function sixButtonsMax(cityNames) {
     const numButtons = $('.searched-city').length;
     if (numButtons > 6) {
@@ -153,13 +153,29 @@ $('.search-button').on('click', (event) => {
     const city = $('.weather-search').val(); 
     const cityFormat = city.charAt(0).toUpperCase() + city.slice(1);
     currentCityName = cityFormat;
-    if (city) {
+    let existingCity = false;
+    // Check if there is an existing local store button with same city name as entered city name
+    for (let i=0; i < cityNames.length; i++) {
+        if (currentCityName == cityNames[i]) {
+            existingCity = true;
+        };
+    };
+    // Conditions for whether city name has been entered and whether it is an existing city name
+    if (city && !existingCity) {
         addButton(currentCityName);
         cityNames.unshift(currentCityName);
         fetchForecast(currentCityName);
         iconArr.splice(0, iconArr.length);
         sixButtonsMax(cityNames);
+        $('.weather-search').attr('placeholder', 'London');
+    } else if (city && existingCity) {
+        fetchForecast(currentCityName);
+        iconArr.splice(0, iconArr.length);
+        $('.weather-search').attr('placeholder', 'London');
+    } else if (!city) {
+        $('.weather-search').attr('placeholder', 'Enter a city name');
     };
+    // Clear input value ready for next input
     $('.weather-search').val('');
     setLocalStorage();
 });
