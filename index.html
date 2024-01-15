@@ -11,8 +11,7 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" 
       crossorigin="anonymous"
       />
-  <link rel="stylesheet" href="styles/reset.css" />
-  <link rel="stylesheet" href="./assets/style.css" />
+  <link rel="stylesheet" href="assets/reset.css" /> 
   <title>Weather Dashboard</title>
 </head>
 
@@ -24,13 +23,13 @@
   <!-- max-width for ultra wide resolutions -->
   <div class="container-fluid" style="max-width: 1400px">
     <div class="row">
-      <aside class="col-lg-3 pb-3 box1">
-        <h2 id="form-heading" class="mt-1 h3 form-label"><!--search header-->
+      <aside class="col-lg-3 pb-3">
+        <h2 id="form-heading" class="mt-1 h3 form-label">
           Search for a City:
         </h2>
-        <form id="search-form" class="form box4">
+        <form id="search-form" class="form">
           <div class="form-inline form-group">
-            <div class="input-group"> <!--search box and submit button-->
+            <div class="input-group"> 
               <input class="form-input weather-search" type="text" id="search-input" placeholder="London"
                 aria-labelledby="form-heading" aria-controls="today forecast" />
               <div class="input-group-append">
@@ -56,6 +55,7 @@
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="assets/forecast-values.js"></script>
   <script src="assets/script.js"></script>
 </body>
 
