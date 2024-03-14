@@ -16,7 +16,7 @@ N/A
 
 Open in the browser, either enter a city name in the search field and click ‘Search’, or select a previously searched city name (from local storage if a previous search has been made) from the buttons below the Search button. Current day forecast and 5-day forecast for selected city will update. 
 
-https://clairepricegithub.github.io/weather-dashboard/
+https://priceclaire.github.io/weather-dashboard/
 
 
 ![screenshot](images/02_screenshot.png)
